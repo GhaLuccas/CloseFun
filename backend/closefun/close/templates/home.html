@@ -4,13 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .form-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            color: #000;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        button.btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        button.btn-primary:hover {
+            background-color: #0069d9;
+        }
+    </style>
 </head>
 <body>
-    <p>home</p>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#"> <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Features</a>
+            </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="form-container">
+        <h2>Search For Close Fun :)</h2>
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+
+    {% if places %}
+    <div class="mt-5">
+        <h2>Nearby Places:</h2>
+        <ul class="list-group">
+            {% for place in places %}
+                <li class="list-group-item">
+                    <strong>{{ place.name }}</strong><br>
+                    {{ place|json_script:"place_json" }}  <!-- Exibe o conteúdo do 'place' como JSON -->
+                </li>
+            {% empty %}
+                <li class="list-group-item">No places found nearby.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+
 </body>
 </html>

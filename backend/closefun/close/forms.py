@@ -1,6 +1,6 @@
 from django import forms
 
-class AddressFroms(forms.Form):
+class AddressForm(forms.Form):
     stree = forms.CharField(label='Street' , max_length=255)
     city = forms.CharField(label='City' , max_length=100)
     state = forms.CharField(label="State" , max_length=100)
